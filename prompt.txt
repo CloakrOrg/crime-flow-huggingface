@@ -1,0 +1,7 @@
+Give me details from the Text. If no info is given for a specific field, reply with 'unknown' for that particular field. Do not reply with anything other than the format. The details should be in the form of a python dictionary with keys:
+- Date:
+- Location:
+- Incident:
+- Identity of suspect:
+- Identity of the victim: 
+Text: 
