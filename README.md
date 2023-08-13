@@ -50,3 +50,15 @@ MongoDB stands as the cornerstone of CloakR's crime reporting platform, offering
 ```markdown
 To make sure our platform works well, we needed a big and constantly updated database that can handle contributions from users all over the country, even if not all regions of the police are involved equally. To solve this issue, we came up with something called a "Listener." It's like a watchful helper that keeps checking online news sources all the time. Using advanced techniques to read websites and a really smart computer program, this Listener collects important information about crimes from those sources. This clever idea helps us keep our database strong and always filled with the latest data. This way, people from different parts of the country can join in, help stop crimes, and even get rewards. We deployed this entire system program work on Replit so that it can monitor outlet 24/7. Replit's seamless integration of code development, deployment, and management simplifies the complex processes involved in maintaining a dynamic crime reporting ecosystem. By harnessing Replit's capabilities, we create a user-centric, reliable, and powerful platform that empowers individuals across the country to actively contribute to community safety, thereby making our choice of Replit a strategic and exceptional one.
 ```
+
+- Auth0
+
+```
+The implementation of Auth0 within CloakR offers a robust and user-centric solution for Aadhar verification. Auth0's sophisticated authentication and identity management capabilities ensure a seamless and secure process, enhancing user trust and confidence. By enabling Aadhar verification through OTP with registered mobile numbers, Auth0 not only reinforces data security but also streamlines the user experience, aligning perfectly with CloakR's commitment to anonymity, privacy, and efficient crime reporting.
+```
+
+- GitHub
+
+```
+Our implementation showcases a unique and innovative utilization of GitHub, reflecting our strategic and well-orchestrated approach to project management and collaboration. Through the establishment of a dedicated organization and the adoption of a microservices architecture, we have not only embraced the principles of modularity and scalability but have also created an environment where efficient coordination and development thrive. By partitioning the project into distinct repositories within the same organization, we've harnessed the power of focused development, enabling us to dedicate resources to specific components while ensuring seamless integration and interoperability. This approach has empowered our team members to work in parallel, enhancing productivity and ensuring a streamlined development process. Our utilization of GitHub's collaborative features, coupled with the meticulous organization of repositories, underscores our commitment to innovation, effective teamwork, and the realization of a comprehensive and impactful solution that has the potential to reshape crime reporting and community safety.
+```

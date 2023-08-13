@@ -22,8 +22,8 @@ def listen():
 
 
 def time_until_next_execution():
-    # DELTA = 5
-    DELTA = 86400
+    DELTA = 5
+    # DELTA = 86400
     now = time.time()
     midnight = now - (now % DELTA) + DELTA
     return midnight - now
