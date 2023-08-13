@@ -5,12 +5,12 @@ import requests
 import datetime
 
 from dotenv import load_dotenv
-
 from bs4 import BeautifulSoup
 
 from tqdm import tqdm
 from typing import List, Dict
 
+import utils
 from extractor import Extractor
 
 
@@ -18,14 +18,18 @@ class NewsListener:
     def __init__(
         self,
         key: str,
-        keywords: List[str] = ["murder", "kill", "burglar", "kidnap", "hit and run"],
+        keywords: List[str] = [
+            "murder",
+            "kill",
+            "burglar",
+            "kidnap",
+            "hit and run",
+            "suspect",
+            "criminal",
+            "victim",
+        ],
         domains: List[str] = [
             "indianexpress.com",
-            "millenniumpost.in",
-            "timesofindia.indiatimes.com",
-            "thehindu.com",
-            "hindustantimes.com",
-            "indiatvnews.com",
         ],
     ) -> None:
         self._key = key
@@ -36,7 +40,7 @@ class NewsListener:
 
     def get(self) -> Dict:
         response = requests.get(self.url).json()
-        data = {"id": id(response), "records": []}
+        data = {"date": self.date, "records": []}
         for article in tqdm(response["articles"]):
             for keyword in self.keywords:
                 if (
@@ -44,13 +48,20 @@ class NewsListener:
                     or keyword in article["description"]
                     or keyword in article["content"]
                 ):
+                    payload = self.scrape(article["url"])
                     record = {
-                        "source": article["source"],
                         "title": article["title"],
-                        "url": article["url"],
-                        "splash_url": article["urlToImage"],
-                        "prompt": self.scrape(article["url"]),
+                        "description": payload["description"],
+                        "date": self.date,
+                        "state": "WB",
+                        "type": "unverified",
+                        "suspect": payload["suspect"],
+                        "victim": payload["victim"],
+                        "image": article["urlToImage"],
                     }
+                    for state, code in utils.state_dict.items():
+                        if state in article["content"].lower():
+                            record["state"] = code
                     data["records"].append(record)
         return data
 
@@ -59,9 +70,9 @@ class NewsListener:
         web_address = re.compile(r"http(s)?://[a-z0-9.~_\-\/]+")
         unicode = re.compile(r"\\u[0-9a-fA-F]{4}")
 
-        text = re.sub(unicode, "", text)
-        text = re.sub(web_address, "", text)
-        text = re.sub(special_chars, "", text)
+        text = re.sub(unicode, " ", text)
+        text = re.sub(web_address, " ", text)
+        text = re.sub(special_chars, " ", text)
 
         text = text.replace("\n", " ")
         text = text.replace("\t", " ")
@@ -71,9 +82,11 @@ class NewsListener:
     def scrape(self, url: str) -> Dict:
         response = requests.get(url).text
         soup = BeautifulSoup(response, "html.parser")
+        target = soup.find("div", class_="full-details")
+        children = target.find_all("p")
+        content = " ".join([p.get_text() for p in children])
         extractor = Extractor()
-        res = extractor(soup.get_text())
-        print(res)
+        res = extractor(content)
         return res
 
 
